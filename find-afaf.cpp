@@ -1,18 +1,23 @@
 #include <iostream>
+#include <string>
+#include <unistd.h> // include <windows.h> on windows
+using namespace std;
 
 // State variables
-int chat_counters[];
+int chat_counters[7];
 int location;
 int step;
-string dialog = `
-LOC 0 CHAT 0 Hi how can I help you ?
-LOC 0 CHAT 0 string of option 1 LOC = 0
-LOC 0 CHAT 0 string of option 2 LOC = 1
-`;
-string warnings = `
-STEP 0 you started your journey
-STEP 10 you are getting tired..
-`;
+string dialog=
+"LOC 0 CHAT 0 Hello how can I help you? /n"
+"LOC 0 CHAT 0 string of option 1 LOC = 0 /n"
+"LOC 0 CHAT 0 string of option 2 LOC = 1 /n"
+;
+
+string warnings=
+"STEP 5 thirty minutes left/n"
+"STEP 10 fifteen minutes left/n"
+"STEP 13 5 minutes left/n"
+;
 
 /////////////////////////
 /* Game loop functions */
@@ -28,7 +33,16 @@ void startGame();
 /* Output functions */
 //////////////////////
 // Prints the provided string to the screen, with a slow animation.
-void printToNewLine(string text, int identation);
+void printToNewLine(string text)
+{
+	// loop through each character in the text
+	for (size_t i = 0; i < text.size(); ++i)
+	{
+		// output one character
+		// flush to make sure the output is not delayed
+		cout << text[i]<<flush;
+		usleep(60000); // use Sleep on windows
+	}
 // Prints a short loading bar (. . .) simulating wait time, blocking input.
 void printWaitingToNewLine(int ms);
 
@@ -56,5 +70,5 @@ bool checkIfWin(int loc, int chat, int step);
 bool checkIfLoose(int loc, int chat, int step);
 
 int main() {
-    // Insert code here.
+    printToNewLine("You enter the corridor and find no one to talk to");
 }
