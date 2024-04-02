@@ -5,7 +5,7 @@ using namespace std;
 
 // State variables
 int chat[7];
-int location;
+int loc;
 int step;
 
 //LOC0=receptionist
@@ -15,16 +15,21 @@ int step;
 //LOC4=afaf office
 //LOC5=toilets
 //LOC6=prayers
+//LOCX=offense
 
 string dialog =
-"LOC 0 CHAT 0 موظف الاستقبال قالك شوية وجاية\n"
-"1- You wait for afaf on the bench ENTER 1 \n"
+"LOC 0 CHAT 0 Receptions says wait \n"
+"1- You wait for afaf on the bench ENTER 1\n"
 "2- You refuse to wait and search for afaf ENTER 2\n"
 "LOC 1 CHAT 0 You've been waiting for 15 minutes and nothing happens.\n"
-"1- You go to the receptionist again\n"
-"2- You search for afaf\n"
+"1- You go to the receptionist again ENTER 0\n"
+"2- You search for afaf ENTER 2\n"
+"LOC 0 CHAT 1 Reception says wait again \n"
+"1- You wait for afaf on the bench ENTER X\n"
+"2- You refuse to wait and search for afaf ENTER 2\n"
+"LOC X CHAT 0 Enta ghaby\n"
 "LOC 2 CHAT 0 You find two office rooms and a prayer zone\n"
-"1- You enter first office \n"
+"1- You enter first office\n"
 "2- You enter second office\n"
 "3- You enter prayer zone\n"
 ;
@@ -49,13 +54,28 @@ void printToNewLine(string text){
 }
     
 // Prints a short loading bar (. . .) simulating wait time, blocking input.
-void printWaitingToNewLine(int ms);
+void printWaitingToNewLine(){
+    string loading=". . .";
+    for (size_t i = 0; i < 5; ++i)
+    {
+        cout << loading[i] << flush;
+        usleep(500000); // use Sleep on windows
+    }
+}
 
 ///////////////////////
 /* Parsing functions */
 ///////////////////////
 // Returns the next dialogue message from the dialogue database.
-string findNextDialogue(int loc, int chat);
+string findNextDialogue(int loc, int chat){
+    string loc_text= to_string(loc);
+    string chat_text= to_string (chat);
+    size_t start=dialog.find("LOC "+loc_text+" CHAT "+chat_text);
+    size_t end=dialog.find("\n", start);
+    size_t sentence=end-start-13;
+    return (dialog.substr(start+13,sentence));
+}
+
 // Returns the next list of options from the dialogue database
 // based on the current dialogue message.
 string findNextOptions(int loc, int chat);
@@ -70,16 +90,18 @@ string findSelectedOptionLocUpdate(int loc, int chat, int option);
 string updateCurrentLoc(string nextLoc);
 
 // Returns the proper warning message based on the current state, if any.
-void checkIfWarningNeeded(int step) {
+string checkIfWarningNeeded(int step) {
     if (step==5) {
-        cout << "60 minutes left";
+        return "60 minutes left";
     }
     if (step==10) {
-        cout << "30 minutes left";
+        return "30 minutes left";
     }
     if (step==13) {
-        cout << "15 minutes left";
+        return "15 minutes left";
     }
+    
+    return " ";
 }
 
 // Returns whether the user has won the game.
@@ -107,6 +129,6 @@ void startGame() {
 
 int main()
 {
-    printToNewLine(dialog.substr(13,56));
+    printWaitingToNewLine();
     cout<<endl;
 }
