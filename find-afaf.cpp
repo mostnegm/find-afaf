@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <unistd.h> // include <windows.h> on windows
+#include <windows.h> // include <unistd.h> on non-windows
 using namespace std;
 
 // State variables
@@ -44,41 +44,53 @@ string warnings =
 /* Output functions */
 //////////////////////
 
-// Prints the provided string to the screen, with a slow animation.
-void printToNewLine(string text){
+void printToNewLine(string text){ // Prints the provided string to the screen, with a slow animation.
     for (size_t i = 0; i < text.size(); ++i)
     {
         cout << text[i] << flush;
-        usleep(100000); // use Sleep on windows
+        Sleep(100); // use usleep on non-windows
     }
 }
     
-// Prints a short loading bar (. . .) simulating wait time, blocking input.
-void printWaitingToNewLine(){
+
+void printWaitingToNewLine(){ // Prints a short loading bar (. . .) simulating wait time, blocking input.
     string loading=". . .";
     for (size_t i = 0; i < 5; ++i)
     {
         cout << loading[i] << flush;
-        usleep(500000); // use Sleep on windows
+        Sleep(1000); // use usleep on non-windows
     }
 }
 
 ///////////////////////
 /* Parsing functions */
 ///////////////////////
-// Returns the next dialogue message from the dialogue database.
-string findNextDialogue(int loc, int chat){
-    string loc_text= to_string(loc);
-    string chat_text= to_string (chat);
-    size_t start=dialog.find("LOC "+loc_text+" CHAT "+chat_text);
-    size_t end=dialog.find("\n", start);
-    size_t sentence=end-start-13;
-    return (dialog.substr(start+13,sentence));
+
+string findNextDialogue(int loc, int chat){ // Returns the next dialogue message from the dialogue database.
+    string loc_txt = to_string(loc);
+    string chat_txt = to_string(chat);
+    size_t start = dialog.find("LOC " + loc_txt + " CHAT " + chat_txt);
+    size_t end = dialog.find("\n", start);
+    size_t dialog_length = end-start-13;
+    string dialog_txt = dialog.substr(start + 13, dialog_length);
+    return (dialog_txt);
 }
+
+
 
 // Returns the next list of options from the dialogue database
 // based on the current dialogue message.
-string findNextOptions(int loc, int chat);
+string findNextOptions(int loc, int chat){
+    string loc_text = to_string(loc);
+    string chat_text = to_string(chat);
+    size_t dialogue = dialog.find("LOC " + loc_text + " CHAT " + chat_text);
+    size_t start = dialog.find("\n", dialogue);
+    size_t end = dialog.find("ENTER", start);
+    size_t option_length = end-start-1;
+    string option_txt = dialog.substr(start +1, option_length);
+    return (option_txt);
+}
+
 // Returns the next state update code related to the selected option.
 string findSelectedOptionLocUpdate(int loc, int chat, int option);
 
@@ -89,8 +101,8 @@ string findSelectedOptionLocUpdate(int loc, int chat, int option);
 // Updates the current loc state using the next loc code.
 string updateCurrentLoc(string nextLoc);
 
-// Returns the proper warning message based on the current state, if any.
-string checkIfWarningNeeded(int step) {
+
+string checkIfWarningNeeded(int step) { // Returns the proper warning message based on the current state, if any.
     if (step==5) {
         return "60 minutes left";
     }
@@ -104,15 +116,26 @@ string checkIfWarningNeeded(int step) {
     return " ";
 }
 
-// Returns whether the user has won the game.
-bool checkIfWin(int loc, int chat, int step);
-// Returns whether the user has lost the game.
-bool checkIfLose(int loc, int chat, int step);
+
+bool checkIfWin(int loc, int chat){ // Returns whether the user has won the game.
+    if ((loc == 3 && chat == 1)) {
+        return (true);
+    }
+    return(false);
+}
+
+bool checkIfLose(int step){ // Returns whether the user has lost the game.
+    if (step == 15) {
+        return(true);
+    }
+    return(false);
+}
 
 
-/////////////////////////
-/* Game loop functions */
-/////////////////////////
+////////////////////////
+/* Game loop function */
+////////////////////////
+
 // This function runs the infinite game loop.
 // The game loop consists of:
 // - Checking the current game state.
@@ -120,8 +143,8 @@ bool checkIfLose(int loc, int chat, int step);
 // - Waits for new user input.
 void startGame() {
     while (true) {
-        printToNewLine(dialog.substr(0,5));
-        break;
+        
+        ++step;
     }
 }
 
@@ -129,6 +152,5 @@ void startGame() {
 
 int main()
 {
-    printWaitingToNewLine();
-    cout<<endl;
+   
 }
