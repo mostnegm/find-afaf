@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 #include <windows.h> // include <unistd.h> on non-windows
 using namespace std;
@@ -13,31 +13,62 @@ int step;
 //LOC2=corridor
 //LOC3=manager office
 //LOC4=afaf office
-//LOC5=toilets
-//LOC6=prayers
+//LOC5=prayers
+//LOC6=toilets
 //LOCX=offense
 
 string dialog =
-"LOC 0 CHAT 0 Receptions says wait \n"
-"1- You wait for afaf on the bench ENTER 1\n"
-"2- You refuse to wait and search for afaf ENTER 2\n"
-"LOC 1 CHAT 0 You've been waiting for 15 minutes and nothing happens.\n"
-"1- You go to the receptionist again ENTER 0\n"
-"2- You search for afaf ENTER 2\n"
-"LOC 0 CHAT 1 Reception says wait again \n"
-"1- You wait for afaf on the bench ENTER X\n"
-"2- You refuse to wait and search for afaf ENTER 2\n"
-"LOC X CHAT 0 Enta ghaby\n"
-"LOC 2 CHAT 0 You find two office rooms and a prayer zone\n"
-"1- You enter first office\n"
-"2- You enter second office\n"
-"3- You enter prayer zone\n"
+"LOC 0 CHAT 0 أنت الآن في استقبال شئون الطلبة لاستخراج ملفك الدراسي. مدام عفاف مش موجودة\n"
+"1- اجلس وانتظر مدام عفاف ENTER 1\n"
+"2- ابحث عن مدام عفاف في الدور ENTER 2\n"
+
+"LOC 1 CHAT 0 مضى من الوقت ربع ساعة ومدام عفاف مجتش\n"
+"1- اذهب لموظف الاستقبال لتعبر عن استيائك ENTER 0\n"
+"2- ابحث عن مدام عفاف في الدور ENTER 2\n"
+
+"LOC 0 CHAT 1 موظف الاستقبال يقول لك اجلس استريح دقيقتين \n"
+"1- اجلس وانتظر مدام عفاف ENTER X\n"
+"2- عبر عن غضبك وابحث عن مدام عفاف في الدور ENTER 2\n"
+
+"LOC X CHAT 0 أنت شخص ساذج...لن تحصل على ملفك الدراسي ابدا\n"
+
+"LOC 2 CHAT 0 على يمينك غرفتين ويسارك مصلى\n"
+"1- ادخل المكتب الاولENTER 3\n"
+"2- ادخل المكتب الثانيENTER 4\n"
+"3- ادخل المصلىENTER 5\n"
+
+"LOC 3 CHAT 0 موظف الاستقبال يصرخ قائلاً 'دة مكتب العميد يا أستاذ!'\n"
+"1- ادخل المكتب الثانيENTER 4\n"
+"2- ادخل المصلىENTER 5\n"
+
+"LOC 5 CHAT 0 لقد دخلت مصلى السيدات وايقظت الدادة بالخطأ\n"
+"1- ادخل المكتب الثانيENTER 4\n"
+
+"LOC 4 CHAT 0 لقد وصلت مكتب مدام عفاف ولكنك وجدت استاذ سيد وانسة منى فقط\n"
+"1- اطلب ملفك الدراسيENTER 4\n"
+"2- اسأل عن مدام عفافENTER 4\n"
+
+"LOC 4 CHAT 1 أستاذ سيد يقول أن مدام عفاف جالها تليفون راحت تعمل حاجة وراجعة (انسة منى تكتم ابتسامة مريبة)\n"
+"1- ارجع الاستقبال لتنتظر مدام عفافENTER 1\n"
+
+"LOC 1 CHAT 1 مضى من الوقت نص ساعة ومدام عفاف مجتش\n"
+"1- اطلب رقم مدام عفاف من موظف الاستقبالENTER 0\n"
+"2- اذهب لمكتب مدام عفاف مجددا ENTER 4\n"
+
+"LOC 0 CHAT 2 موظف الاستقبال يدعي انه لا يحمل رقم مدام عفاف\n"
+"1- ارفع صوتك على موظف الاستقبال ENTER 555\n"
+"2- اذهب لمكتب مدام عفاف مجددا ENTER 4\n"
+
+"LOC 4 CHAT 2 أستاذ سيد راح يصلي ولكن انسة منى موجودة\n"
+"1- اطلب رقم مدام عفاف من انسة منىENTER 1\n"
+"2- ادي لانسة منى 20 جنيهENTER 1\n"
+
 ;
 
 string warnings =
-"STEP 5 thirty minutes left\n"
-"STEP 10 fifteen minutes left\n"
-"STEP 13 5 minutes left\n"
+"STEP 5 باقي على ميعاد خروج الموظفين ساعة واحدة\n"
+"STEP 10 باقي على ميعاد خروج الموظفين نصف ساعة\n"
+"STEP 13 باقي على ميعاد خروج الموظفين عشر دقايق\n"
 ;
 
 //////////////////////
