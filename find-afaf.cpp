@@ -22,7 +22,7 @@ int step;
 //LOCX=offense
 
 string dialog =
-"LOC 0 CHAT 0 Receptions says wait \n"
+"LOC 0 CHAT 0 Receptions says wait\n"
 "1- You wait for afaf on the bench ENTER 1\n"
 "2- You refuse to wait and search for afaf ENTER 2\n"
 "LOC 1 CHAT 0 You've been waiting for 15 minutes and nothing happens.\n"
@@ -53,7 +53,7 @@ void printToNewLine(string text) {
     for (size_t i = 0; i < text.size(); ++i) {
         cout << text[i] << flush;
         #ifdef __APPLE__
-            usleep(60000);
+            usleep(100000);
         #else
             Sleep(100);
         #endif
@@ -66,11 +66,12 @@ void printWaitingToNewLine() {
     for (size_t i = 0; i < 5; ++i) {
         cout << loading[i] << flush;
         #ifdef __APPLE__
-            usleep(600000);
+            usleep(500000);
         #else
             Sleep(1000);
         #endif
     }
+    cout << endl;
 }
 
 ///////////////////////
@@ -162,7 +163,42 @@ void startGame() {
     }
 }
 
+int runSystemChecks() {
+    // Testing printToNewLine
+    printToNewLine("Hi there, nice meeting you!\n");
+    
+    // Testing printWaitingToNewLine
+    printWaitingToNewLine();
+    
+    // Testing findNextDialogue
+    string nextDialogue1 = findNextDialogue(0, 0);
+    cout << nextDialogue1 << endl;
+    if (nextDialogue1 != "Receptions says wait") {
+        return -1;
+    }
+    
+    // Testing findNextOptions
+    
+    // Testing updateCurrentLoc
+    
+    // Testing checkIfWarningNeeded
+    
+    // Testing checkIfWin
+    
+    // Testing checkIfLose
+    
+    return 0;
+}
+
 // Intro function.
 int main() {
-   cout << "hello world!";
+    int error = runSystemChecks();
+    if (error != 0) {
+        cout << "Something is broken.\n";
+        return 0;
+    }
+    
+    // Game loop.
+    
+    return 0;
 }
