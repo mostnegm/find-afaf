@@ -48,7 +48,8 @@ string warnings =
 /* Output functions */
 //////////////////////
 
-void printToNewLine(string text){ // Prints the provided string to the screen, with a slow animation.
+// Prints the provided string to the screen, with a slow animation.
+void printToNewLine(string text){
     for (size_t i = 0; i < text.size(); ++i)
     {
         cout << text[i] << flush;
@@ -59,9 +60,9 @@ void printToNewLine(string text){ // Prints the provided string to the screen, w
         #endif
     }
 }
-    
 
-void printWaitingToNewLine(){ // Prints a short loading bar (. . .) simulating wait time, blocking input.
+// Prints a short loading bar (. . .) simulating wait time, blocking input.
+void printWaitingToNewLine(){
     string loading=". . .";
     for (size_t i = 0; i < 5; ++i)
     {
@@ -78,7 +79,8 @@ void printWaitingToNewLine(){ // Prints a short loading bar (. . .) simulating w
 /* Parsing functions */
 ///////////////////////
 
-string findNextDialogue(int loc, int chat){ // Returns the next dialogue message from the dialogue database.
+// Returns the next dialogue message from the dialogue database.
+string findNextDialogue(int loc, int chat){
     string loc_txt = to_string(loc);
     string chat_txt = to_string(chat);
     size_t start = dialog.find("LOC " + loc_txt + " CHAT " + chat_txt);
@@ -87,8 +89,6 @@ string findNextDialogue(int loc, int chat){ // Returns the next dialogue message
     string dialog_txt = dialog.substr(start + 13, dialog_length);
     return (dialog_txt);
 }
-
-
 
 // Returns the next list of options from the dialogue database
 // based on the current dialogue message.
@@ -113,8 +113,8 @@ string findSelectedOptionLocUpdate(int loc, int chat, int option);
 // Updates the current loc state using the next loc code.
 string updateCurrentLoc(string nextLoc);
 
-
-string checkIfWarningNeeded(int step) { // Returns the proper warning message based on the current state, if any.
+// Returns the proper warning message based on the current state, if any.
+string checkIfWarningNeeded(int step) {
     if (step==5) {
         return "60 minutes left";
     }
@@ -128,21 +128,21 @@ string checkIfWarningNeeded(int step) { // Returns the proper warning message ba
     return " ";
 }
 
-
-bool checkIfWin(int loc, int chat){ // Returns whether the user has won the game.
+// Returns whether the user has won the game.
+bool checkIfWin(int loc, int chat){
     if ((loc == 3 && chat == 1)) {
         return (true);
     }
     return(false);
 }
 
-bool checkIfLose(int step){ // Returns whether the user has lost the game.
+// Returns whether the user has lost the game.
+bool checkIfLose(int step){
     if (step == 15) {
         return(true);
     }
     return(false);
 }
-
 
 ////////////////////////
 /* Game loop function */
@@ -160,8 +160,7 @@ void startGame() {
     }
 }
 
-
-
+// Intro function.
 int main()
 {
    cout << "hello world!";
