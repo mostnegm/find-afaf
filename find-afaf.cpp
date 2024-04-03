@@ -49,9 +49,8 @@ string warnings =
 //////////////////////
 
 // Prints the provided string to the screen, with a slow animation.
-void printToNewLine(string text){
-    for (size_t i = 0; i < text.size(); ++i)
-    {
+void printToNewLine(string text) {
+    for (size_t i = 0; i < text.size(); ++i) {
         cout << text[i] << flush;
         #ifdef __APPLE__
             usleep(60000);
@@ -62,10 +61,9 @@ void printToNewLine(string text){
 }
 
 // Prints a short loading bar (. . .) simulating wait time, blocking input.
-void printWaitingToNewLine(){
+void printWaitingToNewLine() {
     string loading=". . .";
-    for (size_t i = 0; i < 5; ++i)
-    {
+    for (size_t i = 0; i < 5; ++i) {
         cout << loading[i] << flush;
         #ifdef __APPLE__
             usleep(600000);
@@ -80,7 +78,7 @@ void printWaitingToNewLine(){
 ///////////////////////
 
 // Returns the next dialogue message from the dialogue database.
-string findNextDialogue(int loc, int chat){
+string findNextDialogue(int loc, int chat) {
     string loc_txt = to_string(loc);
     string chat_txt = to_string(chat);
     size_t start = dialog.find("LOC " + loc_txt + " CHAT " + chat_txt);
@@ -92,7 +90,7 @@ string findNextDialogue(int loc, int chat){
 
 // Returns the next list of options from the dialogue database
 // based on the current dialogue message.
-string findNextOptions(int loc, int chat){
+string findNextOptions(int loc, int chat) {
     string loc_text = to_string(loc);
     string chat_text = to_string(chat);
     size_t dialogue = dialog.find("LOC " + loc_text + " CHAT " + chat_text);
@@ -133,7 +131,7 @@ string checkIfWarningNeeded(int step) {
 }
 
 // Returns whether the user has won the game.
-bool checkIfWin(int loc, int chat){
+bool checkIfWin(int loc, int chat) {
     if ((loc == 3 && chat == 1)) {
         return (true);
     }
@@ -141,7 +139,7 @@ bool checkIfWin(int loc, int chat){
 }
 
 // Returns whether the user has lost the game.
-bool checkIfLose(int step){
+bool checkIfLose(int step) {
     if (step == 15) {
         return(true);
     }
@@ -165,7 +163,6 @@ void startGame() {
 }
 
 // Intro function.
-int main()
-{
+int main() {
    cout << "hello world!";
 }
