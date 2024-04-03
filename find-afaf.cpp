@@ -111,7 +111,11 @@ string findSelectedOptionLocUpdate(int loc, int chat, int option);
 ////////////////////////////
 
 // Updates the current loc state using the next loc code.
-string updateCurrentLoc(string nextLoc);
+void updateCurrentLoc(int nextLoc) {
+    step++;
+    chat[loc]++;
+    loc = nextLoc;
+}
 
 // Returns the proper warning message based on the current state, if any.
 string checkIfWarningNeeded(int step) {
