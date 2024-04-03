@@ -400,3 +400,4 @@ FodyWeavers.xsd
 # Afaf ignore
 *.vcxproj
 *.vcxproj.filters
+*.vscode
