@@ -1,6 +1,10 @@
 #include <iostream>
 #include <string>
-#include <windows.h> // include <unistd.h> on non-windows
+#ifdef __APPLE__
+    #include <unistd.h>
+#else
+    #include <windows.h>
+#endif
 using namespace std;
 
 // State variables
@@ -48,7 +52,11 @@ void printToNewLine(string text){ // Prints the provided string to the screen, w
     for (size_t i = 0; i < text.size(); ++i)
     {
         cout << text[i] << flush;
-        Sleep(100); // use usleep on non-windows
+        #ifdef __APPLE__
+            usleep(60000);
+        #else
+            Sleep(100);
+        #endif
     }
 }
     
@@ -58,7 +66,11 @@ void printWaitingToNewLine(){ // Prints a short loading bar (. . .) simulating w
     for (size_t i = 0; i < 5; ++i)
     {
         cout << loading[i] << flush;
-        Sleep(1000); // use usleep on non-windows
+        #ifdef __APPLE__
+            usleep(600000);
+        #else
+            Sleep(1000);
+        #endif
     }
 }
 
@@ -152,5 +164,5 @@ void startGame() {
 
 int main()
 {
-   
+   cout << "hello world!";
 }
