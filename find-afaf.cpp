@@ -22,8 +22,8 @@ int step;
 //LOCX=offense
 
 string dialog =
-"LOC 0 CHAT 0 أنت الآن في استقبال شئون الطلبة لاستخراج ملفك الدراسي. مدام عفاف مش موجودة\n"
-"1- اجلس وانتظر مدام عفاف ENTER 1\n"
+"LOC 0 CHAT 0 Receptions says wait\n"
+"1- sit and wait for afafENTER 1\n"
 "2- ابحث عن مدام عفاف في الدور ENTER 2\n"
 
 "LOC 1 CHAT 0 مضى من الوقت ربع ساعة ومدام عفاف مجتش\n"
@@ -98,7 +98,7 @@ void printWaitingToNewLine() {
         #ifdef __APPLE__
             usleep(500000);
         #else
-            Sleep(1000);
+            Sleep(250);
         #endif
     }
     cout << endl;
@@ -126,7 +126,7 @@ string findNextOptions(int loc, int chat) {
     string chat_text = to_string(chat);
     size_t dialogue = dialog.find("LOC " + loc_text + " CHAT " + chat_text);
     size_t start = dialog.find("\n", dialogue);
-    size_t end = dialog.find("ENTER", start);
+    size_t end = dialog.find("ENTER", start+1);
     size_t option_length = end-start-1;
     string option_txt = dialog.substr(start +1, option_length);
     return (option_txt);
@@ -186,6 +186,7 @@ bool checkIfLose(int step) {
 // - Checking the current game state.
 // - Updating the GUI based on the current game state (win, lose, next state).
 // - Waits for new user input.
+
 void startGame() {
     while (true) {
         
@@ -208,14 +209,20 @@ int runSystemChecks() {
     }
     
     // Testing findNextOptions
+    string nextOption1 = findNextOptions(0, 0);
+    cout << nextOption1 << endl;
+    if (nextOption1 != "1- sit and wait for afaf") {
+        return -1;
+    }
     
-    // Testing updateCurrentLoc
     
     // Testing checkIfWarningNeeded
-    
-    // Testing checkIfWin
-    
-    // Testing checkIfLose
+    int warning_test;
+    for (warning_test= 1; warning_test <= 15;++warning_test) {
+        
+        cout << checkIfWarningNeeded(warning_test);
+            
+    }
     
     return 0;
 }
