@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string>
 #ifdef __APPLE__
     #include <unistd.h>
@@ -133,7 +133,29 @@ string findNextOptions(int loc, int chat) {
 }
 
 // Returns the next state update code related to the selected option.
-string findSelectedOptionLocUpdate(int loc, int chat, int option);
+int findLocOfSelectedOption(int loc, int chat, int option) {
+    string loc_text = to_string(loc);
+    string chat_text = to_string(chat);
+    size_t dialog_start = dialog.find("LOC " + loc_text + " CHAT " + chat_text);
+    size_t option_start = dialog.find("\n", dialog_start) + 1;
+    
+    while (true) {
+        size_t endLine = dialog.find('\n', option_start);
+        string line = dialog.substr(option_start, endLine - option_start + 1);
+        string firstChar = line.substr(0, 1);
+        string option_text = to_string(option);
+        if (firstChar == option_text) {
+            size_t lineEndLoc = line.find('\n');
+            string loc_text = line.substr(lineEndLoc-1, 1);
+            return stoi(loc_text);
+        } else if (firstChar == "L") {
+            // In case of incorrect input, return current location as well.
+            return loc;
+        } else {
+            option_start += line.length();
+        }
+    }
+}
 
 ////////////////////////////
 /* State update functions */
