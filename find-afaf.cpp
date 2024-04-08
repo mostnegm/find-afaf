@@ -85,9 +85,10 @@ void printToNewLine(string text) {
         #ifdef __APPLE__
             usleep(100000);
         #else
-            Sleep(100);
+            Sleep(50);
         #endif
     }
+    cout << endl;
 }
 
 // Prints a short loading bar (. . .) simulating wait time, blocking input.
@@ -221,8 +222,18 @@ bool checkIfLose(int step) {
 
 void startGame() {
     while (true) {
-        
-        ++step;
+        checkIfWin(loc, chat[loc]);
+        checkIfLose(step);
+        string warning= checkIfWarningNeeded(step);
+        printToNewLine(warning);
+        printToNewLine(findNextDialogue(loc, chat[loc]));
+        printToNewLine(findNextOptions(loc, chat[loc]));
+
+        int option;
+        cin >> option;
+        int nextLocation = findLocOfSelectedOption(loc, chat[loc], option);
+        updateCurrentLoc(nextLocation);
+
     }
 }
 
@@ -261,13 +272,8 @@ int runSystemChecks() {
 
 // Intro function.
 int main() {
-    int error = runSystemChecks();
-    if (error != 0) {
-        cout << "Something is broken.\n";
-        return 0;
-    }
     
-    // Game loop.
+    startGame();
     
     return 0;
 }
